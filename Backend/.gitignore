@@ -1,0 +1,53 @@
+# Node.js dependencies
+node_modules/
+
+# Log files
+npm-debug.log*
+.eslintcache
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+dist/
+build/
+public/build/
+
+# IDE and OS specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test coverage reports
+coverage/
+
+# Uploaded files or temporary data
+uploads/
+tmp/
+
+# Database files (if local)
+*.sqlite
+*.db
+
+# Yarn and PNPM lock files
+yarn.lock
+pnpm-lock.yaml
+
+# Test environment files
+.env.test
+
+# Cache and output
+.cache/
+.nyc_output/
+
+# npm pack output
+*.tgz
+
+# Generic log files
+*.log
+
+# SSL keys
+*.pem
