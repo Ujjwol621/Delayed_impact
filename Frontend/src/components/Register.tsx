@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import api from "../services/api";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -27,7 +28,27 @@ export default function Register() {
     }
     setError("");
     // Submit logic here
-    alert("Registered successfully! (Demo)");
+    
+    api.post("/auth/register", {
+      name: form.name,
+      phone: form.phone,
+      password: form.password,
+      confirmPassword:form.confirmPassword,
+      age: form.age,
+      gender: form.gender,
+      // address: form.address, // if you add address
+    })
+    .then((res) => {
+      alert("Registered successfully!");
+      // Optionally redirect or clear form
+    })
+    .catch((err) => {
+      console.error(err);
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
+    });
+    // alert("Registered successfully! (Demo)");
   }
 
   return (

@@ -3,7 +3,7 @@ import authService from "../services/userService.js";
 // REGISTER CONTROLLER
 const regUserController = async (req, res) => {
   const input = req.body;
-
+  // console.log(req.body);
   if (!input.password) {
     return res.status(400).send("Password is required");
   }
