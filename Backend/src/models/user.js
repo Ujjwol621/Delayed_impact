@@ -16,13 +16,20 @@ const userSchema =new mongoose.Schema({
        minLength:[6,"password length must be more 6 letter"],
       
     },
+    age:{
+        type:Number,
+    },
+    gender:{
+        type:[String],
+        enum:["male","female","others"],
+    },
     role:{
         type:[String],
         default:["user"],
         enum:["user","admin"],
     },
- 
-      createdAt:{
+
+    createdAt:{
         type:Date,
         default:Date.now(),
     },

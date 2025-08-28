@@ -2,9 +2,9 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 
 // REGISTER
-const registerUser = async ({ name, email, phone, password }) => {
+const registerUser = async ({ name, phone,password,age,gender }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ name, email, phone, password: hashedPassword });
+  const user = new User({ name, phone,password:hashedPassword,age,gender });
   return await user.save();
 };
 
