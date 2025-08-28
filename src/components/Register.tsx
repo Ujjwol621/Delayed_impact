@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Register() {
@@ -141,9 +142,9 @@ export default function Register() {
         </button>
         <div className="text-center mt-2 text-sm">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login here
-          </a>
+          <Link to="/login" className="text-blue-600 hover:underline">
+          Login here
+          </Link>
         </div>
       </form>
     </div>
