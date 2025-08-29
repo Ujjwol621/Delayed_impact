@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import {useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+import api from "../services/api";
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -7,6 +8,7 @@ export default function Login() {
     password: "",
   });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,7 +22,26 @@ export default function Login() {
       return;
     }
     setError("");
-    alert("Login successful! (Demo)");
+
+    api.post("/auth/login", {
+      phone: form.phone,
+      password: form.password,
+    })
+    .then((res) => {
+  alert("Login successfull!");
+  setForm({
+    phone: "",
+    password: "",
+  });
+  navigate("/admin_dashboard")// or your desired route
+})
+    .catch((err) => {
+      console.error(err);
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    });
+// alert("Login successful! (Demo)");
   }
 
   return (

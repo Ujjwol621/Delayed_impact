@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../services/api";
 
@@ -13,6 +13,7 @@ export default function Register() {
     // address: "",
   });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -39,9 +40,18 @@ export default function Register() {
       // address: form.address, // if you add address
     })
     .then((res) => {
-      alert("Registered successfully!");
-      // Optionally redirect or clear form
-    })
+  alert("Registered successfully!");
+  setForm({
+    name: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    age: "",
+    gender: "",
+    // address: "",
+  });
+  navigate("/login"); // or your desired route
+})
     .catch((err) => {
       console.error(err);
       setError(
