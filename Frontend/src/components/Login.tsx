@@ -2,23 +2,26 @@ import {useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import api from "../services/api";
 
+import CustomerDashboard from "./Customer_Dashboard";
+import Dashboard from "./Admin_Dashboard";
+
 export default function Login() {
   const [form, setForm] = useState({
     phone: "",
     password: "",
+    role: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Add your login logic here
-    if (!form.phone || !form.password) {
-      setError("Please enter both phone number and password.");
+    if (!form.phone || !form.password || !form.role) {
+      setError("Please enter phone, password, and select a role.");
       return;
     }
     setError("");
@@ -26,22 +29,27 @@ export default function Login() {
     api.post("/auth/login", {
       phone: form.phone,
       password: form.password,
+      role: form.role,
     })
-    .then((res) => {
-  alert("Login successfull!");
-  setForm({
-    phone: "",
-    password: "",
-  });
-  navigate("/admin_dashboard")// or your desired route
-})
-    .catch((err) => {
-      console.error(err);
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
-      );
-    });
-// alert("Login successful! (Demo)");
+      .then((res) => {
+        alert("Login successful!");
+        setForm({
+          phone: "",
+          password: "",
+          role: "",
+        });
+        if (form.role === "admin") {
+          navigate("/admin_dashboard");
+        } else if (form.role === "customer") {
+          navigate("/customer_dashboard");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(
+          err.response?.data?.message || "Login failed. Please try again."
+        );
+      });
   }
 
   return (
@@ -75,6 +83,20 @@ export default function Login() {
             required
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Role</label>
+          <select
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="customer">Customer</option>
+          </select>
         </div>
         <button
           type="submit"
